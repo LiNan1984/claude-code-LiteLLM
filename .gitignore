@@ -1,0 +1,31 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# LiteLLM config (contains API key)
+litellm-config/config.yaml
+litellm-config/*.db
+
+# Claude Code project settings (contains master_key)
+.claude/settings.json
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# Secrets
+*.env
+.env
+
+# Claude Code source (large repo)
+claude-code/

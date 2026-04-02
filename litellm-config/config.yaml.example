@@ -1,0 +1,14 @@
+model_list:
+  - model_name: glm-5-fp8              # Claude Code 显示的模型名称
+    litellm_params:
+      model: openai/glm-5-fp8           # openai/ 前缀表示 OpenAI 兼容 API
+      api_base: "https://your-api.com/v1"  # 改为你的 API 地址（到 /v1）
+      api_key: "sk-your-api-key-here"       # 改为你的 API 密钥
+      timeout: 300
+      drop_params: true
+
+litellm_settings:
+  drop_params: true
+  master_key: "sk-litellm-master-change-me"  # 改为你自己的密钥
+  # 关键：强制使用 chat/completions 格式而非 Responses API
+  use_chat_completions_url_for_anthropic_messages: true

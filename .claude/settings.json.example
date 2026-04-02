@@ -1,0 +1,16 @@
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "http://localhost:4000",
+    "ANTHROPIC_AUTH_TOKEN": "sk-litellm-master-your-secret",
+    "ANTHROPIC_API_KEY": "",
+    "ANTHROPIC_MODEL": "glm-5-fp8",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-5-fp8",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-5-fp8",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-5-fp8",
+    "API_TIMEOUT_MS": "3000000",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "MAX_THINKING_TOKENS": "10000",
+    "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "50"
+  },
+  "model": "glm-5-fp8"
+}

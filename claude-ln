@@ -1,0 +1,14 @@
+#!/bin/bash
+# claude-ln: 使用 Modal DeepSeek V4 Flash 启动 Claude Code
+# 通过 cd 到 LiteLLM 项目目录，让项目级 .claude/settings.json 覆盖全局配置
+# 不影响直接运行 claude 命令
+
+PROJECT_DIR="/Users/linan/claude-code-LiteLLM"
+ORIG_DIR="$(pwd)"
+
+echo "Starting Claude Code with Modal DeepSeek V4 Flash..."
+echo "Working directory: $ORIG_DIR"
+echo ""
+
+cd "$PROJECT_DIR"
+claude

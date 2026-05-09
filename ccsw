@@ -1,0 +1,70 @@
+#!/bin/bash
+# ccsw: ccs 增强版，切换配置时同时更新模型名
+# 用法: ccsw <name>   或   ccsw ls
+
+SETTINGS="$HOME/.claude/settings.json"
+
+# 模型映射表: provider名 → 模型配置
+get_models() {
+  case "$1" in
+    twofishai|xiaozhuoai)
+      echo '{"model":"gpt-5.3","haiku":"gpt-5.3","sonnet":"gpt-5.3","opus":"gpt-5.3"}'
+      ;;
+    bigmodel)
+      echo '{"model":"glm-5.1","haiku":"glm-4.5-air","sonnet":"glm-5.1","opus":"glm-5.1"}'
+      ;;
+    *)
+      echo '{}'
+      ;;
+  esac
+}
+
+if [ "$1" = "ls" ] || [ "$1" = "list" ]; then
+  ccs ls
+  exit 0
+fi
+
+if [ -z "$1" ]; then
+  echo "Usage: ccsw <name>    (twofishai|xiaozhuoai|bigmodel)"
+  echo "       ccsw ls"
+  exit 1
+fi
+
+# 执行 ccs switch
+ccs switch "$1"
+if [ $? -ne 0 ]; then
+  exit 1
+fi
+
+# 获取模型配置
+MODELS=$(get_models "$1")
+if [ "$MODELS" = "{}" ]; then
+  echo "⚠️  No model mapping for '$1', models not updated"
+  exit 0
+fi
+
+# 用 python 更新 settings.json 中的模型名
+python3 -c "
+import json, sys
+
+with open('$SETTINGS', 'r') as f:
+    settings = json.load(f)
+
+models = $MODELS
+env = settings.setdefault('env', {})
+
+if 'model' in models:
+    env['ANTHROPIC_MODEL'] = models['model']
+    settings['model'] = models['model']
+if 'haiku' in models:
+    env['ANTHROPIC_DEFAULT_HAIKU_MODEL'] = models['haiku']
+if 'sonnet' in models:
+    env['ANTHROPIC_DEFAULT_SONNET_MODEL'] = models['sonnet']
+if 'opus' in models:
+    env['ANTHROPIC_DEFAULT_OPUS_MODEL'] = models['opus']
+
+with open('$SETTINGS', 'w') as f:
+    json.dump(settings, f, indent=2, ensure_ascii=False)
+
+print('✅ Models updated: ' + models.get('model','?'))
+" 2>&1

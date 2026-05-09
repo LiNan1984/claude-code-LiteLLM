@@ -11,7 +11,11 @@ wheels/
 
 # LiteLLM config (contains API key)
 litellm-config/config.yaml
+litellm-config/config-xiaozhuoai.yaml
 litellm-config/*.db
+
+# Scripts with embedded tokens
+claude-lb
 
 # Claude Code project settings (contains master_key)
 .claude/settings.json
